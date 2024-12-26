@@ -254,28 +254,28 @@ rm -rf ../master
 
 # Load devices Config
 if [ "$platform" = "x86_64" ]; then
-    curl -s $mirror/openwrt/24-config-musl-x86 > .config
+    curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/openwrt-24.10/openwrt/24-config-musl-x86 > .config
 elif [ "$platform" = "bcm53xx" ]; then
     if [ "$MINIMAL_BUILD" = "y" ]; then
-        curl -s $mirror/openwrt/24-config-musl-r8500-minimal > .config
+        curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/openwrt-24.10/openwrt/24-config-musl-r8500-minimal > .config
     else
-        curl -s $mirror/openwrt/24-config-musl-r8500 > .config
+        curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/openwrt-24.10/openwrt/24-config-musl-r8500 > .config
     fi
     sed -i '1i\# CONFIG_PACKAGE_kselftests-bpf is not set\n# CONFIG_PACKAGE_perf is not set\n' .config
 elif [ "$platform" = "rk3568" ]; then
-    curl -s $mirror/openwrt/24-config-musl-r5s > .config
+    curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/openwrt-24.10/openwrt/24-config-musl-r5s > .config
 elif [ "$platform" = "armv8" ]; then
-    curl -s $mirror/openwrt/24-config-musl-armsr-armv8 > .config
+    curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/openwrt-24.10/openwrt/24-config-musl-armsr-armv8 > .config
 else
-    curl -s $mirror/openwrt/24-config-musl-r4s > .config
+    curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/openwrt-24.10/openwrt/24-config-musl-r4s > .config
 fi
 
 # config-common
 if [ "$MINIMAL_BUILD" = "y" ]; then
-    [ "$platform" != "bcm53xx" ] && curl -s $mirror/openwrt/24-config-minimal-common >> .config
+    [ "$platform" != "bcm53xx" ] && curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/openwrt-24.10/openwrt/24-config-minimal-common >> .config
     echo 'VERSION_TYPE="minimal"' >> package/base-files/files/usr/lib/os-release
 else
-    [ "$platform" != "bcm53xx" ] && curl -s $mirror/openwrt/24-config-common >> .config
+    [ "$platform" != "bcm53xx" ] && curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/openwrt-24.10/openwrt/24-config-common >> .config
     [ "$platform" = "armv8" ] && sed -i '/DOCKER/Id' .config
 fi
 
