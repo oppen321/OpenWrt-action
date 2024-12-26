@@ -5,7 +5,6 @@ sed -i 's/OpenWrt/ZeroWrt/' package/base-files/files/bin/config_generate
 
 # 更换AD核心
 rm -rf feeds/packages/net/adguardhome
-git clone https://git.kejizero.online/zhao/adguardhome.git package/new/adguardhome
 
 # ZeroWrt选项菜单
 mkdir -p files/bin
