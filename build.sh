@@ -1,1 +1,1 @@
-exec ./openwrt/build.sh "$@"
+
