@@ -3,7 +3,7 @@
 # 修改名称
 sed -i 's/OpenWrt/ZeroWrt/' package/base-files/files/bin/config_generate
 
-# 更换AD核心
+# 移除AD核心
 rm -rf feeds/packages/net/adguardhome
 
 # ZeroWrt选项菜单
