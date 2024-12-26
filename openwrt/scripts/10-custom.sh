@@ -16,3 +16,8 @@ mkdir -p files/root
 curl -L -o files/root/version.txt https://git.kejizero.online/zhao/files/raw/branch/main/bin/version.txt
 chmod +x files/root/version.txt
 
+# 更换背景
+curl -L -o package/new/luci-theme-argon/luci-theme-argon/htdocs/luci-static/argon/img/bg.webp https://git.kejizero.online/zhao/files/raw/branch/main/%20background/bg.webp
+
+# 自定义配置
+curl -L -o package/base-files/files/etc/banner https://git.kejizero.online/zhao/files/raw/branch/main/etc/banner
