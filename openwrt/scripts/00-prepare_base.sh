@@ -340,8 +340,8 @@ sed -i '/PS1/a\export TERM=xterm-color' package/base-files/files/etc/profile
 sed -i 's#ash#bash#g' package/base-files/files/etc/passwd
 sed -i '\#export ENV=/etc/shinit#a export HISTCONTROL=ignoredups' package/base-files/files/etc/profile
 mkdir -p files/root
-curl -so files/root/.bash_profile $mirror/openwrt/files/root/.bash_profile
-curl -so files/root/.bashrc $mirror/openwrt/files/root/.bashrc
+curl -so files/root/.bash_profile https://git.kejizero.online/zhao/files/raw/branch/main/root/.bash_profile
+curl -so files/root/.bashrc https://git.kejizero.online/zhao/files/raw/branch/main/root/.bashrc
 
 # rootfs files
 mkdir -p files/etc/sysctl.d
