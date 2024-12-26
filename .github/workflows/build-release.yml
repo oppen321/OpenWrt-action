@@ -2,3 +2,45 @@ name: Build releases
 
 on:
   workflow_dispatch:
+    inputs:
+      device:
+        description: 'Select the build device'
+        required: true
+        default: 'x86_64'
+        type: choice
+        options:
+          - 'x86_64'
+          - 'nanopi-r4s'
+          - 'nanopi-r5s'
+      version:
+        description: 'Select the build version'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+         - 'release'
+         - 'snapshot-24.10'
+      ccache:
+        description: 'Enable ccache (Use Cache to speed up next build)'
+        type: boolean
+        default: false
+      lan_addr:
+        description: 'Setting default LAN address'
+        required: true
+        default: '10.0.0.1'
+        type: string
+      build_options:
+        description: 'Build options (separate multiple options with spaces)'
+        required: false
+        default: 'BUILD_FAST=y ENABLE_BPF=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_MOLD=y KERNEL_CLANG_LTO=y'
+        type: string         
+  schedule:
+    - cron: '0 19 * * *'  # 每天 UTC 19:00 运行，相当于北京时间凌晨 3:00
+    
+jobs:
+  build:
+    name: Build ${{ github.event.inputs.device }}
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash 
