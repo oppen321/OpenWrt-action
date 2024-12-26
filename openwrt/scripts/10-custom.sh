@@ -3,9 +3,6 @@
 # 修改名称
 sed -i 's/OpenWrt/ZeroWrt/' package/base-files/files/bin/config_generate
 
-# 移除AD核心
-rm -rf feeds/packages/net/adguardhome
-
 # ZeroWrt选项菜单
 mkdir -p files/bin
 # cp -f $GITHUB_WORKSPACE/Diy/ZeroWrt files/bin/ZeroWrt
