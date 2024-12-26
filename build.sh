@@ -1,1 +1,3 @@
-openwrt/build.sh
+#!/bin/bash
+cd openwrt
+./build.sh "$@"
