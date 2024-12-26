@@ -87,15 +87,15 @@ jobs:
         sudo /usr/bin/caddy start --config caddyfile --adapter caddyfile
 
     - name: Free disk space
-      uses: sbwml/actions@free-disk
+      uses: oppen321/actions@free-disk
       with:
         build-mount-path: /builder
 
     - name: Build System Setup
-      uses: sbwml/actions@openwrt-build-setup
+      uses: oppen321/actions@openwrt-build-setup
 
     - name: Install LLVM
-      uses: sbwml/actions@install-llvm
+      uses: oppen321/actions@install-llvm
 
     - name: Restore Cached
       if: ${{ github.event.inputs.ccache == 'true' && github.event.inputs.device != 'armv8' && github.event.inputs.device != 'nanopi-r4s' }}
@@ -146,7 +146,7 @@ jobs:
       continue-on-error: true
       working-directory: /builder
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.TOKEN_OPPEN321 }}
         GH_REPO: ${{ github.repository }}
       run: |
         gh cache delete openwrt-24.10-${{ github.event.inputs.device }}-ccache || true
@@ -178,7 +178,7 @@ jobs:
         commit: master
         replacesArtifacts: true
         prerelease: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.TOKEN_OPPEN321 }}
         artifacts: |
           ${{ env.build_dir }}/ccache/*
 
@@ -235,5 +235,5 @@ jobs:
         tag: ${{ env.latest_release }}
         commit: master
         replacesArtifacts: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.TOKEN_OPPEN321 }}
         artifacts: ${{ env.build_dir }}/rom/*
