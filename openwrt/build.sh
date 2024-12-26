@@ -443,11 +443,7 @@ if [ "$platform" = "x86_64" ]; then
     # OTA json
     if [ "$1" = "rc2" ]; then
         mkdir -p ota
-        if [ "$MINIMAL_BUILD" = "y" ]; then
-            OTA_URL="https://x86.cooluc.com/d/minimal/openwrt-24.10"
-        else
-            OTA_URL="https://github.com/sbwml/builder/releases/download"
-        fi
+        OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
         VERSION=$(sed 's/v//g' version.txt)
         SHA256=$(sha256sum bin/targets/x86/64*/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
         cat > ota/fw.json <<EOF
@@ -463,7 +459,7 @@ if [ "$platform" = "x86_64" ]; then
 EOF
     fi
     # Backup download cache
-    if [ "$isCN" = "CN" ] && [ "$1" = "rc2" ]; then
+    if [ "$1" = "rc2" ]; then
         rm -rf dl/geo* dl/go-mod-cache
         tar cf ../dl.gz dl
     fi
@@ -492,6 +488,7 @@ elif [ "$platform" = "armv8" ]; then
     # OTA json
     if [ "$1" = "rc2" ]; then
         mkdir -p ota
+        OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
         VERSION=$(sed 's/v//g' version.txt)
         SHA256=$(sha256sum bin/targets/armsr/armv8*/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
         cat > ota/fw.json <<EOF
@@ -500,7 +497,7 @@ elif [ "$platform" = "armv8" ]; then
     {
       "build_date": "$CURRENT_DATE",
       "sha256sum": "$SHA256",
-      "url": "https://github.com/sbwml/builder/releases/download/v$VERSION/openwrt-$VERSION-armsr-armv8-generic-squashfs-combined-efi.img.gz"
+      "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-armsr-armv8-generic-squashfs-combined-efi.img.gz"
     }
   ]
 }
@@ -527,11 +524,7 @@ elif [ "$platform" = "bcm53xx" ]; then
     # OTA json
     if [ "$1" = "rc2" ]; then
         mkdir -p ota
-        if [ "$MINIMAL_BUILD" = "y" ]; then
-            OTA_URL="https://r8500.cooluc.com/d/minimal/openwrt-24.10"
-        else
-            OTA_URL="https://github.com/sbwml/builder/releases/download"
-        fi
+        OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
         VERSION=$(sed 's/v//g' version.txt)
         SHA256=$(sha256sum bin/targets/bcm53xx/generic/*-bcm53xx-generic-netgear_r8500-squashfs.chk | awk '{print $1}')
         cat > ota/fw.json <<EOF
@@ -571,10 +564,9 @@ else
     # OTA json
     if [ "$1" = "rc2" ]; then
         mkdir -p ota
-        OTA_URL="https://github.com/sbwml/builder/releases/download"
+        OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
         VERSION=$(sed 's/v//g' version.txt)
         if [ "$model" = "nanopi-r4s" ]; then
-            [ "$MINIMAL_BUILD" = "y" ] && OTA_URL="https://r4s.cooluc.com/d/minimal/openwrt-24.10"
             SHA256=$(sha256sum bin/targets/rockchip/armv8*/*-squashfs-sysupgrade.img.gz | awk '{print $1}')
             cat > ota/fw.json <<EOF
 {
@@ -588,7 +580,6 @@ else
 }
 EOF
         elif [ "$model" = "nanopi-r5s" ]; then
-            [ "$MINIMAL_BUILD" = "y" ] && OTA_URL="https://r5s.cooluc.com/d/minimal/openwrt-24.10"
             SHA256_R5C=$(sha256sum bin/targets/rockchip/armv8*/*-r5c-squashfs-sysupgrade.img.gz | awk '{print $1}')
             SHA256_R5S=$(sha256sum bin/targets/rockchip/armv8*/*-r5s-squashfs-sysupgrade.img.gz | awk '{print $1}')
             cat > ota/fw.json <<EOF
@@ -612,11 +603,12 @@ EOF
         fi
     fi
     # Backup download cache
-    if [ "$isCN" = "CN" ] && [ "$version" = "rc2" ]; then
+    if [ "$1" = "rc2" ]; then
         rm -rf dl/geo* dl/go-mod-cache
         tar -cf ../dl.gz dl
     fi
     exit 0
 fi
+
 
 # 很少有人会告诉你为什么要这样做，而是会要求你必须要这样做。
