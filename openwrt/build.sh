@@ -30,9 +30,9 @@ ip_info=`curl -sk https://ip.cooluc.com`;
 
 # script url
 if [ "$isCN" = "CN" ]; then
-    export mirror=https://init.cooluc.com
+    export mirror=https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/master
 else
-    export mirror=https://init2.cooluc.com
+    export mirror=https://raw.githubusercontent.com/oppen321/OpenWrt-Action/refs/heads/master
 fi
 
 # github actions - caddy server
