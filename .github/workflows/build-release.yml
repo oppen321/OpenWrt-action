@@ -50,7 +50,7 @@ jobs:
       continue-on-error: true
       uses: actions/checkout@main
       with:
-        path: r4s_build_script
+        path: OpenWrt-Action
 
     - name: Setup variables
       run: |
@@ -243,7 +243,7 @@ jobs:
         name: ${{ env.latest_release }}
         allowUpdates: true
         tag: ${{ env.latest_release }}
-        commit: master
+        commit: openwrt-24.10
         replacesArtifacts: true
         token: ${{ secrets.TOKEN_OPPEN321 }}
         artifacts: ${{ env.build_dir }}/rom/*
