@@ -24,3 +24,6 @@ CONFIG_COREMARK_NUMBER_OF_THREADS=16
 
 ### iStore
 CONFIG_PACKAGE_luci-app-store=y
+
+### Lucky
+CONFIG_PACKAGE_luci-app-lucky=y
