@@ -221,7 +221,7 @@ jobs:
         tar zcf rom/buildinfo_${{ github.event.inputs.device }}.tar.gz info
 
     - name: Create virtual machine images
-      if: ${{ matrix.model == 'x86_64' }}
+      if: ${{ github.event.inputs.device == 'x86_64' }}
       working-directory: /builder
       run: |
         mkdir -p virtual_images
