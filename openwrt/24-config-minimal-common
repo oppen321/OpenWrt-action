@@ -78,6 +78,9 @@ CONFIG_NGINX_HTTP_REAL_IP=y
 CONFIG_NGINX_HTTP_SUB=y
 CONFIG_NGINX_STREAM_REAL_IP=y
 
+### iStore
+CONFIG_PACKAGE_luci-app-store=y
+
 ### APPS
 CONFIG_PACKAGE_luci-app-autoreboot=y
 CONFIG_PACKAGE_luci-app-cpufreq=y
