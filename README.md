@@ -85,7 +85,7 @@
 </tr>
 <tr>
 <td width="200"><a href="https://github.com/IrineSistiana" target="_blank">IrineSistiana</a></td>
-<td width="200"><a href="https://github.com/XTLS" target="_blank">XTLS</a></td>
+<td width="200"><a href="https://github.com/sbwml" target="_blank">sbwml</a></td>
 <td width="200"><a href="https://github.com/fw876" target="_blank">fw876</a></td>
 </tr>
 </table>
