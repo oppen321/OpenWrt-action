@@ -246,3 +246,9 @@ jobs:
         replacesArtifacts: true
         token: ${{ secrets.TOKEN_OPPEN321 }}
         artifacts: ${{ env.build_dir }}/rom/*
+
+    - name: Update OTA Info
+      if: github.event.inputs.version == 'release'
+      run: |
+        chmod +x update_ota.sh
+        ./update_ota.sh
