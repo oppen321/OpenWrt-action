@@ -444,7 +444,7 @@ if [ "$platform" = "x86_64" ]; then
 if [ "$1" = "rc2" ]; then
     mkdir -p ota
     # 直接设置你的仓库地址，移除条件判断
-    OTA_URL="https://github.com/你的用户名/你的仓库/releases/download"
+    OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
     
     VERSION=$(sed 's/v//g' version.txt)
     SHA256=$(sha256sum bin/targets/x86/64*/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
