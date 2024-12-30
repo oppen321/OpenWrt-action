@@ -236,16 +236,16 @@ jobs:
         echo "<center><h1>x86_64 虚拟机平台镜像</h1></center>" > README.md      
 
     - name: Create release
-      continue-on-error: true
-      uses: ncipollo/release-action@v1
+      uses: ncipollo/release-action@v1.14.0
       with:
-        name: ${{ env.latest_release }}
+        name: OpenWrt-${{ env.latest_release }}
         allowUpdates: true
         tag: ${{ env.latest_release }}
-        commit: openwrt-24.10
+        commit: main
         replacesArtifacts: true
         token: ${{ secrets.TOKEN_OPPEN321 }}
-        artifacts: ${{ env.build_dir }}/rom/*
+        artifacts: |
+          ${{ env.build_dir }}/rom/*
 
     - name: Upload OTA Info
       if: github.event.inputs.version == 'release'
