@@ -246,3 +246,17 @@ jobs:
         replacesArtifacts: true
         token: ${{ secrets.TOKEN_OPPEN321 }}
         artifacts: ${{ env.build_dir }}/rom/*
+
+    - name: Deploy OTA to Gitea
+      if: github.event.inputs.version == 'release'
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: main
+        folder: /builder/openwrt/ota
+        repository-name: zhao/OTA
+        token: ${{ secrets.GITEA_PASSWORD }}
+        git-config-name: GitHub Action
+        git-config-email: action@github.com
+        clean: true
+        single-commit: true
+        repository-url: https://git.kejizero.online/zhao/OTA.git
