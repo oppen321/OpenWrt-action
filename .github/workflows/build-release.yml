@@ -290,4 +290,4 @@ jobs:
           git config user.email "action@github.com"
           git add .
           git commit -m "Update OTA information"
-          git push --force https://zhao:${{ secrets.GITEA_PASSWORD }}@git.kejizero.online/zhao/OTA.git master
+          git push -f https://zhao:${{ secrets.GITEA_PASSWORD }}@git.kejizero.online/zhao/OTA.git main
