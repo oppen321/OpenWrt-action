@@ -247,6 +247,14 @@ jobs:
         token: ${{ secrets.TOKEN_OPPEN321 }}
         artifacts: ${{ env.build_dir }}/rom/*
 
+    - name: Upload OTA Info
+      if: github.event.inputs.version == 'release'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ota-${{ matrix.device }}
+        path: ${{ env.build_dir }}/openwrt/ota/fw.json
+        retention-days: 1        
+
   merge-ota:
     needs: build  # 等待所有构建任务完成
     if: github.event.inputs.version == 'release'
