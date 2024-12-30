@@ -246,33 +246,3 @@ jobs:
         replacesArtifacts: true
         token: ${{ secrets.TOKEN_OPPEN321 }}
         artifacts: ${{ env.build_dir }}/rom/*
-
-  update-ota:
-    needs: build
-    if: github.event.inputs.version == 'release'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          path: OpenWrt-Action
-
-      - name: Setup GitHub CLI
-        run: |
-          type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
-          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-          && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-          && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-          && sudo apt update \
-          && sudo apt install gh -y
-
-      - name: Run OTA Update
-        env:
-          GITEA_PASSWORD: ${{ secrets.GITEA_PASSWORD }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ env.latest_release }}
-          RELEASE_VERSION: ${{ github.event.inputs.version }}
-        run: |
-          cd OpenWrt-Action/openwrt
-          chmod +x update_ota.sh
-          ./update_ota.sh
