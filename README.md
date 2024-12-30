@@ -9,17 +9,46 @@
 - [通过 GitHub 下载](https://github.com/oppen321/OpenWrt-Action/releases)
 - [问题反馈](https://github.com/oppen321/OpenWrt-Action/issues)
 
-## 固件特性
+## 功能特性
 
-- 基于 OpenWrt 官方源码编译
-- 内置 OTA 在线升级功能
-- 支持 IPv6
-- 支持 Docker
-- 支持 USB 打印
-- 支持 SQM QoS
-- 支持 DDNS
-- 支持 UPnP
-- 默认主题：bootstrap
+### 基本功能
+| 基本 | 状态 | 基本 | 状态 |
+|------|------|------|------|
+| kmod 内核模块安装 | ✅ | 全锥型 NAT（NFT、BCM 双方案） | ✅ |
+| AES 硬件加速 | ✅ | 构建优化（O3） | ✅ |
+| GPU 硬件加速 | ✅ | 在线 OTA 升级（squashfs） | ✅ |
+| HDMI 终端输出 | ✅ | 固件重置（squashfs） | ✅ |
+| BBRv3 拥塞控制 | ✅ | CPU 超频支持 | ✅ |
+| KVM 虚拟化支持 | ✅ | Shortcut-FE（支持 UDP 入站） | ✅ |
+| LLVM-BPF 支持 | ✅ | LRNG（v57） | ✅ |
+| NGINX & CURL HTTP3/QUIC 支持 | ✅ | NAT6 | ✅ |
+
+### 内置插件
+| 内置插件 | 状态 | 内置插件 | 状态 |
+|----------|------|----------|------|
+| PassWall | ✅ | Docker | ✅ |
+| HomeProxy | ✅ | TTY 终端 | ✅ |
+| FileBrowser | ✅ | NetData 监控 | ✅ |
+| qBittorrent | ✅ | DiskMan 磁盘管理 | ✅ |
+| MosDNS | ✅ | CPU 性能调节 | ✅ |
+| 动态 DNS | ✅ | SQM 列队管理 | ✅ |
+| Watchcat | ✅ | nlbw 宽带监控 | ✅ |
+| KMS 服务器 | ✅ | Socat | ✅ |
+| FRP 客户端 | ✅ | 应用过滤 | ✅ |
+| 网络唤醒 | ✅ | 访问控制 | ✅ |
+| 网络共享（Samba） | ✅ | UPnP | ✅ |
+| 锐捷认证 | ✅ | IP 限速 | ✅ |
+| Aria2 | ✅ | WireGuard | ✅ |
+| Alist 文件列表 | ✅ | L2TP | ✅ |
+| USB 打印服务器 | ✅ | ZeroTier | ✅ |
+| 隔空播放（AirConnect） | ✅ | WebDav | ✅ |
+| 自定义命令 | ✅ | AirPlay 2 | ✅ |
+| 网速测试 | ✅ | NATMap | ✅ |
+
+### 图例说明
+- ✅ 可用
+- ❌ 不可用
+- ⏳ 计划中
 
 ## 固件说明
 
