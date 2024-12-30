@@ -247,16 +247,42 @@ jobs:
         token: ${{ secrets.TOKEN_OPPEN321 }}
         artifacts: ${{ env.build_dir }}/rom/*
 
-    - name: Deploy OTA to Gitea
-      if: github.event.inputs.version == 'release'
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        branch: main
-        folder: /builder/openwrt/ota
-        repository-name: zhao/OTA
-        token: ${{ secrets.GITEA_PASSWORD }}
-        git-config-name: GitHub Action
-        git-config-email: action@github.com
-        clean: true
-        single-commit: true
-        repository-url: https://git.kejizero.online/zhao/OTA.git
+  merge-ota:
+    needs: build  # 等待所有构建任务完成
+    if: github.event.inputs.version == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Download all OTA files
+        uses: actions/download-artifact@v4
+        with:
+          path: ota_files
+          pattern: ota-*
+          merge-multiple: true
+
+      - name: Merge OTA Info
+        run: |
+          mkdir -p merged
+          echo "{}" > merged/ota.json
+          
+          for file in ota_files/*/fw.json; do
+            if [ -f "$file" ]; then
+              jq -s '.[0] * .[1]' merged/ota.json "$file" > merged/temp.json
+              mv merged/temp.json merged/ota.json
+            fi
+          done
+
+      - name: Deploy OTA to Gitea
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: master
+          folder: merged
+          repository-name: zhao/OTA
+          token: ${{ secrets.GITEA_PASSWORD }}
+          git-config-name: GitHub Action
+          git-config-email: action@github.com
+          clean: true
+          single-commit: true
+          repository-url: https://git.kejizero.online/zhao/OTA.git
