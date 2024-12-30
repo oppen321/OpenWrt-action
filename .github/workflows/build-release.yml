@@ -283,14 +283,11 @@ jobs:
           done
 
       - name: Deploy OTA to Gitea
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: master
-          folder: merged
-          repository-name: zhao/OTA
-          token: ${{ secrets.GITEA_PASSWORD }}
-          git-config-name: GitHub Action
-          git-config-email: action@github.com
-          clean: true
-          single-commit: true
-          repository-url: https://git.kejizero.online/zhao/OTA.git
+        run: |
+          cd merged
+          git init
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add .
+          git commit -m "Update OTA information"
+          git push --force https://zhao:${{ secrets.GITEA_PASSWORD }}@git.kejizero.online/zhao/OTA.git master
