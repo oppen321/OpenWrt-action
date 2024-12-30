@@ -33,4 +33,4 @@ git_sparse_clone main https://github.com/linkease/istore-ui app-store-ui
 git_sparse_clone main https://github.com/linkease/istore luci
 
 # Lucky
-git clone https://github.com/gdy666/luci-app-lucky package/new/luci-app-lucky
+ git clone https://github.com/sirpdboy/luci-app-lucky.git package/lucky
