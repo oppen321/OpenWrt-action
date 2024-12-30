@@ -238,9 +238,9 @@ jobs:
     - name: Create release
       uses: ncipollo/release-action@v1.14.0
       with:
-        name: OpenWrt-${{ env.latest_release }}
+        name: OpenWrt-v24.10.0-rc4
         allowUpdates: true
-        tag: ${{ env.latest_release }}
+        tag: v24.10.0-rc4
         commit: openwrt-24.10
         replacesArtifacts: true
         token: ${{ secrets.TOKEN_OPPEN321 }}
