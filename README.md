@@ -72,22 +72,12 @@
 
 ## 特别感谢
 
-<table>
-<tr>
-<td width="33%" align="center"><a href="https://www.friendlyarm.com">友善电子科技</a></td>
-<td width="33%" align="center"><a href="https://github.com/openwrt/openwrt">OpenWrt</a></td>
-<td width="33%" align="center"><a href="https://github.com/immortalwrt">ImmortalWrt</a></td>
-</tr>
-<tr>
-<td width="33%" align="center"><a href="https://github.com/jerrykuku">jerrykuku</a></td>
-<td width="33%" align="center"><a href="https://github.com/QiuSimons">QiuSimons</a></td>
-<td width="33%" align="center"><a href="https://github.com/xiaorouji">xiaorouji</a></td>
-</tr>
-<tr>
-<td width="33%" align="center"><a href="https://github.com/IrineSistiana">IrineSistiana</a></td>
-<td width="33%" align="center"><a href="https://github.com/XTLS">XTLS</a></td>
-<td width="33%" align="center"><a href="https://github.com/fw876">fw876</a></td>
-</tr>
-</table>
-|:---------------------------------:|:------------------------:|:-----------------------------:|
-| [IrineSistiana](https://github.com/IrineSistiana) | [XTLS](https://github.com/XTLS) | [fw876](https://github.com/fw876) |
+<div align="center">
+
+友善电子科技 &emsp;&emsp; OpenWrt &emsp;&emsp; ImmortalWrt
+
+jerrykuku &emsp;&emsp; QiuSimons &emsp;&emsp; xiaorouji
+
+IrineSistiana &emsp;&emsp; XTLS &emsp;&emsp; fw876
+
+</div>
