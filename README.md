@@ -56,24 +56,30 @@
 - 默认用户名：root
 - 默认密码：password
 
-## 在线升级
-
-系统 → 备份/升级 → 在线升级
-
-OTA 服务器：`https://git.kejizero.online/zhao/OTA/raw/branch/master/ota.json`
-
 ## 问题反馈
 
 如果在使用过程中遇到任何问题，欢迎：
 1. [提交 Issue](https://github.com/oppen321/OpenWrt-Action/issues)
 2. [加入讨论](https://github.com/oppen321/OpenWrt-Action/discussions)
 
-## 赞助支持
+## 开源地址
 
-如果您觉得这个项目对您有帮助，欢迎打赏支持！
+| 类型 | 地址 |
+|------|------|
+| 构建脚本 | [https://init2.cooluc.com](https://init2.cooluc.com) |
+| 构建脚本（存档） | [https://github.com/sbwml/r4s_build_script](https://github.com/sbwml/r4s_build_script) |
+| 构建来源 | [https://github.com/sbwml/builder](https://github.com/sbwml/builder) |
 
-[打赏](https://github.com/oppen321/OpenWrt-Action)
+## 特别感谢
 
----
+| [![友善电子科技](https://avatars.githubusercontent.com/u/1285158?s=64)](https://www.friendlyarm.com) | [![OpenWrt](https://avatars.githubusercontent.com/u/2419508?s=64)](https://github.com/openwrt/openwrt) | [![ImmortalWrt](https://avatars.githubusercontent.com/u/53193414?s=64)](https://github.com/immortalwrt) |
+|:---------------------------------:|:------------------------:|:-----------------------------:|
+| [友善电子科技](https://www.friendlyarm.com) | [OpenWrt](https://github.com/openwrt/openwrt) | [ImmortalWrt](https://github.com/immortalwrt) |
 
-[粤ICP备xxx号] | [粤公网安备 xxx号]
+| [![jerrykuku](https://avatars.githubusercontent.com/u/9485680?s=64)](https://github.com/jerrykuku) | [![QiuSimons](https://avatars.githubusercontent.com/u/45143996?s=64)](https://github.com/QiuSimons) | [![xiaorouji](https://avatars.githubusercontent.com/u/10976739?s=64)](https://github.com/xiaorouji) |
+|:---------------------------------:|:------------------------:|:-----------------------------:|
+| [jerrykuku](https://github.com/jerrykuku) | [QiuSimons](https://github.com/QiuSimons) | [xiaorouji](https://github.com/xiaorouji) |
+
+| [![IrineSistiana](https://avatars.githubusercontent.com/u/48940125?s=64)](https://github.com/IrineSistiana) | [![XTLS](https://avatars.githubusercontent.com/u/74091257?s=64)](https://github.com/XTLS) | [![fw876](https://avatars.githubusercontent.com/u/17291827?s=64)](https://github.com/fw876) |
+|:---------------------------------:|:------------------------:|:-----------------------------:|
+| [IrineSistiana](https://github.com/IrineSistiana) | [XTLS](https://github.com/XTLS) | [fw876](https://github.com/fw876) |
