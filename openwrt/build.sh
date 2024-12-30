@@ -440,26 +440,28 @@ if [ "$platform" = "x86_64" ]; then
         tar zcf x86_64-$kmodpkg_name.tar.gz $kmodpkg_name
         rm -rf $kmodpkg_name
     fi
-    # OTA json
-    if [ "$1" = "rc2" ]; then
-        mkdir -p ota
-        OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
-        VERSION=$(sed 's/v//g' version.txt)
-        SHA256=$(sha256sum bin/targets/x86/64*/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
-        cat > ota/fw.json <<EOF
+# OTA json
+if [ "$1" = "rc2" ]; then
+    mkdir -p ota
+    # 直接设置你的仓库地址，移除条件判断
+    OTA_URL="https://github.com/你的用户名/你的仓库/releases/download"
+    
+    VERSION=$(sed 's/v//g' version.txt)
+    SHA256=$(sha256sum bin/targets/x86/64*/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
+    cat > ota/fw.json <<EOF
 {
-  "x86_64": [
-    {
-      "build_date": "$CURRENT_DATE",
-      "sha256sum": "$SHA256",
-      "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-x86-64-generic-squashfs-combined-efi.img.gz"
-    }
-  ]
+    "x86_64": [
+        {
+            "build_date": "$CURRENT_DATE",
+            "sha256sum": "$SHA256",
+            "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-x86-64-generic-squashfs-combined-efi.img.gz"
+        }
+    ]
 }
 EOF
     fi
     # Backup download cache
-    if [ "$1" = "rc2" ]; then
+    if [ "$isCN" = "CN" ] && [ "$1" = "rc2" ]; then
         rm -rf dl/geo* dl/go-mod-cache
         tar cf ../dl.gz dl
     fi
@@ -488,7 +490,6 @@ elif [ "$platform" = "armv8" ]; then
     # OTA json
     if [ "$1" = "rc2" ]; then
         mkdir -p ota
-        OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
         VERSION=$(sed 's/v//g' version.txt)
         SHA256=$(sha256sum bin/targets/armsr/armv8*/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
         cat > ota/fw.json <<EOF
@@ -497,7 +498,7 @@ elif [ "$platform" = "armv8" ]; then
     {
       "build_date": "$CURRENT_DATE",
       "sha256sum": "$SHA256",
-      "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-armsr-armv8-generic-squashfs-combined-efi.img.gz"
+      "url": "https://github.com/oppen321/OpenWrt-Action/releases/download/v$VERSION/openwrt-$VERSION-armsr-armv8-generic-squashfs-combined-efi.img.gz"
     }
   ]
 }
@@ -521,21 +522,21 @@ elif [ "$platform" = "bcm53xx" ]; then
         tar zcf bcm53xx-$kmodpkg_name.tar.gz $kmodpkg_name
         rm -rf $kmodpkg_name
     fi
-    # OTA json
-    if [ "$1" = "rc2" ]; then
-        mkdir -p ota
-        OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
-        VERSION=$(sed 's/v//g' version.txt)
-        SHA256=$(sha256sum bin/targets/bcm53xx/generic/*-bcm53xx-generic-netgear_r8500-squashfs.chk | awk '{print $1}')
-        cat > ota/fw.json <<EOF
+# OTA json
+if [ "$1" = "rc2" ]; then
+    mkdir -p ota
+    OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
+    VERSION=$(sed 's/v//g' version.txt)
+    SHA256=$(sha256sum bin/targets/bcm53xx/generic/*-bcm53xx-generic-netgear_r8500-squashfs.chk | awk '{print $1}')
+    cat > ota/fw.json <<EOF
 {
-  "netgear,r8500": [
-    {
-      "build_date": "$CURRENT_DATE",
-      "sha256sum": "$SHA256",
-      "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-bcm53xx-generic-netgear_r8500-squashfs.chk"
-    }
-  ]
+    "netgear,r8500": [
+        {
+            "build_date": "$CURRENT_DATE",
+            "sha256sum": "$SHA256",
+            "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-bcm53xx-generic-netgear_r8500-squashfs.chk"
+        }
+    ]
 }
 EOF
     fi
@@ -561,54 +562,51 @@ else
         tar zcf aarch64-$kmodpkg_name.tar.gz $kmodpkg_name
         rm -rf $kmodpkg_name
     fi
-    # OTA json
-    if [ "$1" = "rc2" ]; then
-        mkdir -p ota
-        OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
-        VERSION=$(sed 's/v//g' version.txt)
-        if [ "$model" = "nanopi-r4s" ]; then
-            SHA256=$(sha256sum bin/targets/rockchip/armv8*/*-squashfs-sysupgrade.img.gz | awk '{print $1}')
-            cat > ota/fw.json <<EOF
+# OTA json
+if [ "$1" = "rc2" ]; then
+    mkdir -p ota
+    OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"  # 直接设置你的仓库地址
+    VERSION=$(sed 's/v//g' version.txt)
+    if [ "$model" = "nanopi-r4s" ]; then
+        SHA256=$(sha256sum bin/targets/rockchip/armv8*/*-squashfs-sysupgrade.img.gz | awk '{print $1}')
+        cat > ota/fw.json <<EOF
 {
-  "friendlyarm,nanopi-r4s": [
-    {
-      "build_date": "$CURRENT_DATE",
-      "sha256sum": "$SHA256",
-      "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-rockchip-armv8-friendlyarm_nanopi-r4s-squashfs-sysupgrade.img.gz"
-    }
-  ]
+    "friendlyarm,nanopi-r4s": [
+        {
+            "build_date": "$CURRENT_DATE",
+            "sha256sum": "$SHA256",
+            "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-rockchip-armv8-friendlyarm_nanopi-r4s-squashfs-sysupgrade.img.gz"
+        }
+    ]
 }
 EOF
-        elif [ "$model" = "nanopi-r5s" ]; then
-            SHA256_R5C=$(sha256sum bin/targets/rockchip/armv8*/*-r5c-squashfs-sysupgrade.img.gz | awk '{print $1}')
-            SHA256_R5S=$(sha256sum bin/targets/rockchip/armv8*/*-r5s-squashfs-sysupgrade.img.gz | awk '{print $1}')
-            cat > ota/fw.json <<EOF
+    elif [ "$model" = "nanopi-r5s" ]; then
+        SHA256_R5C=$(sha256sum bin/targets/rockchip/armv8*/*-r5c-squashfs-sysupgrade.img.gz | awk '{print $1}')
+        SHA256_R5S=$(sha256sum bin/targets/rockchip/armv8*/*-r5s-squashfs-sysupgrade.img.gz | awk '{print $1}')
+        cat > ota/fw.json <<EOF
 {
-  "friendlyarm,nanopi-r5c": [
-    {
-      "build_date": "$CURRENT_DATE",
-      "sha256sum": "$SHA256_R5C",
-      "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-rockchip-armv8-friendlyarm_nanopi-r5c-squashfs-sysupgrade.img.gz"
-    }
-  ],
-  "friendlyarm,nanopi-r5s": [
-    {
-      "build_date": "$CURRENT_DATE",
-      "sha256sum": "$SHA256_R5S",
-      "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-rockchip-armv8-friendlyarm_nanopi-r5s-squashfs-sysupgrade.img.gz"
-    }
-  ]
+    "friendlyarm,nanopi-r5c": [
+        {
+            "build_date": "$CURRENT_DATE",
+            "sha256sum": "$SHA256_R5C",
+            "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-rockchip-armv8-friendlyarm_nanopi-r5c-squashfs-sysupgrade.img.gz"
+        }
+    ],
+    "friendlyarm,nanopi-r5s": [
+        {
+            "build_date": "$CURRENT_DATE",
+            "sha256sum": "$SHA256_R5S",
+            "url": "$OTA_URL/v$VERSION/openwrt-$VERSION-rockchip-armv8-friendlyarm_nanopi-r5s-squashfs-sysupgrade.img.gz"
+        }
+    ]
 }
 EOF
         fi
     fi
     # Backup download cache
-    if [ "$1" = "rc2" ]; then
+    if [ "$isCN" = "CN" ] && [ "$version" = "rc2" ]; then
         rm -rf dl/geo* dl/go-mod-cache
         tar -cf ../dl.gz dl
     fi
     exit 0
 fi
-
-
-# 很少有人会告诉你为什么要这样做，而是会要求你必须要这样做。
