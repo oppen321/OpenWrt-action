@@ -273,36 +273,44 @@ jobs:
       - name: Merge OTA Info
         run: |
           mkdir -p merged
-          echo "{}" > merged/ota.json
           
-          # 显示下载的文件
-          echo "Downloaded files:"
-          ls -R ota_files/
+          # 创建空的目标结构
+          cat > merged/ota.json << 'EOF'
+          {
+            "netgear,r8500": [],
+            "friendlyarm,nanopi-r4s": [],
+            "friendlyarm,nanopi-r5c": [],
+            "friendlyarm,nanopi-r5s": [],
+            "x86_64": [],
+            "armsr,armv8": []
+          }
+          EOF
           
           # 处理每个设备的 fw.json
           for file in ota_files/*/fw.json; do
             if [ -f "$file" ]; then
               echo "Processing: $file"
-              echo "Content of $file:"
-              cat "$file"
               
-              # 使用 jq 合并，保持数组结构
+              # 使用 jq 合并，保持正确的结构
               jq -s '
+                def merge_objects:
+                  reduce .[] as $item (
+                    {},
+                    . * $item
+                  );
                 if length > 1 then
-                  .[0] * .[1]
+                  merge_objects
                 else
                   .[0]
                 end
               ' merged/ota.json "$file" > merged/temp.json
               
               mv merged/temp.json merged/ota.json
-              echo "Current merged result:"
-              cat merged/ota.json
             fi
           done
           
           # 格式化最终的 JSON
-          jq . merged/ota.json > merged/temp.json && mv merged/temp.json merged/ota.json
+          jq -S . merged/ota.json > merged/temp.json && mv merged/temp.json merged/ota.json
 
       - name: Deploy OTA to Gitea
         run: |
