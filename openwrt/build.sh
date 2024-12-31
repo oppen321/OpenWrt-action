@@ -444,7 +444,7 @@ if [ "$platform" = "x86_64" ]; then
 if [ "$1" = "rc2" ]; then
     mkdir -p ota
     # 直接设置你的仓库地址，移除条件判断
-    OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
+    OTA_URL="https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download"
     
     VERSION=$(sed 's/v//g' version.txt)
     SHA256=$(sha256sum bin/targets/x86/64*/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
@@ -498,7 +498,7 @@ elif [ "$platform" = "armv8" ]; then
     {
       "build_date": "$CURRENT_DATE",
       "sha256sum": "$SHA256",
-      "url": "https://github.com/oppen321/OpenWrt-Action/releases/download/v$VERSION/openwrt-$VERSION-armsr-armv8-generic-squashfs-combined-efi.img.gz"
+      "url": "https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download/v$VERSION/openwrt-$VERSION-armsr-armv8-generic-squashfs-combined-efi.img.gz"
     }
   ]
 }
@@ -525,7 +525,7 @@ elif [ "$platform" = "bcm53xx" ]; then
 # OTA json
 if [ "$1" = "rc2" ]; then
     mkdir -p ota
-    OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"
+    OTA_URL="https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download"
     VERSION=$(sed 's/v//g' version.txt)
     SHA256=$(sha256sum bin/targets/bcm53xx/generic/*-bcm53xx-generic-netgear_r8500-squashfs.chk | awk '{print $1}')
     cat > ota/fw.json <<EOF
@@ -565,7 +565,7 @@ else
 # OTA json
 if [ "$1" = "rc2" ]; then
     mkdir -p ota
-    OTA_URL="https://github.com/oppen321/OpenWrt-Action/releases/download"  # 直接设置你的仓库地址
+    OTA_URL="https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download"  # 直接设置你的仓库地址
     VERSION=$(sed 's/v//g' version.txt)
     if [ "$model" = "nanopi-r4s" ]; then
         SHA256=$(sha256sum bin/targets/rockchip/armv8*/*-squashfs-sysupgrade.img.gz | awk '{print $1}')
