@@ -1,8 +1,8 @@
 name: Sync OTA Info
 
 on:
-  workflow_dispatch:  # 手动触发
-  workflow_run:      # 当其他工作流完成时触发
+  workflow_dispatch:
+  workflow_run:
     workflows: ["Build releases"]
     types:
       - completed
@@ -10,28 +10,30 @@ on:
 jobs:
   sync:
     name: Sync OTA Info
-    runs-on: ubuntu-latest  # 使用最新的 ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Install jq
-        run: sudo apt-get install -y jq
-
-      - name: Get latest workflow run
-        id: workflow
         run: |
+          sudo apt-get install -y jq
+          echo "Getting latest workflow run ID..."
           run_id=$(curl -s -H "Authorization: token ${{ secrets.TOKEN_OPPEN321 }}" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/build.yml/runs?status=success&per_page=1" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/build-releases.yml/runs?status=success&per_page=1" \
             | jq -r '.workflow_runs[0].id')
-          echo "run_id=$run_id" >> $GITHUB_OUTPUT
+          echo "Latest successful run ID: $run_id"
+          echo "run_id=$run_id" >> $GITHUB_ENV
 
       - name: Download all OTA files
-        uses: actions/download-artifact@v4
+        uses: dawidd6/action-download-artifact@v3
         with:
+          workflow: Build releases
+          run_id: ${{ env.run_id }}
           name: ota-*
           path: ota_files
-          github-token: ${{ secrets.TOKEN_OPPEN321 }}
-          repository: ${{ github.repository }}
-          run-id: ${{ steps.workflow.outputs.run_id }}
+          repo: ${{ github.repository }}
+          token: ${{ secrets.TOKEN_OPPEN321 }}
+          search_artifacts: true
+          if_no_artifact_found: warn
 
       - name: Merge OTA Info
         run: |
