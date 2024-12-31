@@ -33,4 +33,4 @@ git_sparse_clone main https://github.com/linkease/istore-ui app-store-ui
 git_sparse_clone main https://github.com/linkease/istore luci
 
 # 在线更新配置
-sed -i '/# OTA/,/fi/c\OTA_URL="https://git.kejizero.online/zhao/OTA/raw/branch/main/ota.json"' /package/new/default-settings/default/zzz-default-settings
+sed -i '/# OTA/,/fi/c\OTA_URL="https://git.kejizero.online/zhao/OTA/raw/branch/main/ota.json"' package/new/default-settings/default/zzz-default-settings
