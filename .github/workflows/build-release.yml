@@ -274,43 +274,42 @@ jobs:
         run: |
           mkdir -p merged
           
-          # 创建空的目标结构
-          cat > merged/ota.json << 'EOF'
-          {
-            "netgear,r8500": [],
-            "friendlyarm,nanopi-r4s": [],
-            "friendlyarm,nanopi-r5c": [],
-            "friendlyarm,nanopi-r5s": [],
-            "x86_64": [],
-            "armsr,armv8": []
-          }
-          EOF
+          # 创建初始 JSON 结构
+          echo "{}" > merged/ota.json
           
           # 处理每个设备的 fw.json
           for file in ota_files/*/fw.json; do
             if [ -f "$file" ]; then
               echo "Processing: $file"
               
-              # 使用 jq 合并，保持正确的结构
+              # 使用 jq 合并，保留数组内容
               jq -s '
-                def merge_objects:
+                def merge:
                   reduce .[] as $item (
                     {},
                     . * $item
                   );
-                if length > 1 then
-                  merge_objects
-                else
-                  .[0]
-                end
+                merge
               ' merged/ota.json "$file" > merged/temp.json
               
               mv merged/temp.json merged/ota.json
             fi
           done
           
-          # 格式化最终的 JSON
-          jq -S . merged/ota.json > merged/temp.json && mv merged/temp.json merged/ota.json
+          # 确保所有设备都有数组
+          jq '
+            . * {
+              "netgear,r8500": (."netgear,r8500" // []),
+              "friendlyarm,nanopi-r4s": (."friendlyarm,nanopi-r4s" // []),
+              "friendlyarm,nanopi-r5c": (."friendlyarm,nanopi-r5c" // []),
+              "friendlyarm,nanopi-r5s": (."friendlyarm,nanopi-r5s" // []),
+              "x86_64": (."x86_64" // []),
+              "armsr,armv8": (."armsr,armv8" // [])
+            }
+          ' merged/ota.json > merged/temp.json
+          
+          # 格式化并排序
+          jq -S . merged/temp.json > merged/ota.json
 
       - name: Deploy OTA to Gitea
         run: |
