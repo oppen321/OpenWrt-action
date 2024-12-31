@@ -1,0 +1,47 @@
+name: Sync OTA Info
+
+on:
+  workflow_dispatch:  # 手动触发
+  workflow_run:      # 当其他工作流完成时触发
+    workflows: ["Build releases"]
+    types:
+      - completed
+
+jobs:
+  sync:
+    name: Sync OTA Info
+    runs-on: ubuntu-latest  # 使用最新的 ubuntu
+
+    steps:
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Download all OTA files
+        uses: actions/download-artifact@v4
+        with:
+          path: ota_files
+          pattern: ota-*
+          merge-multiple: true
+
+      - name: Merge OTA Info
+        run: |
+          mkdir -p merged
+          echo "{}" > merged/ota.json
+          
+          for file in ota_files/*/fw.json; do
+            if [ -f "$file" ]; then
+              jq -s '.[0] * .[1]' merged/ota.json "$file" > merged/temp.json
+              mv merged/temp.json merged/ota.json
+            fi
+          done
+
+      - name: Deploy OTA to Gitea
+        run: |
+          cd merged
+          git init
+          git config user.name "Gitea Action"
+          git config user.email "action@gitea.com"
+          git add .
+          git commit -m "Update OTA information"
+          git branch -M main
+          git push -f https://zhao:${{ secrets.GITEA_PASSWORD }}@git.kejizero.online/zhao/OTA.git main
