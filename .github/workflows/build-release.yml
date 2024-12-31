@@ -275,12 +275,34 @@ jobs:
           mkdir -p merged
           echo "{}" > merged/ota.json
           
+          # 显示下载的文件
+          echo "Downloaded files:"
+          ls -R ota_files/
+          
+          # 处理每个设备的 fw.json
           for file in ota_files/*/fw.json; do
             if [ -f "$file" ]; then
-              jq -s '.[0] * .[1]' merged/ota.json "$file" > merged/temp.json
+              echo "Processing: $file"
+              echo "Content of $file:"
+              cat "$file"
+              
+              # 使用 jq 合并，保持数组结构
+              jq -s '
+                if length > 1 then
+                  .[0] * .[1]
+                else
+                  .[0]
+                end
+              ' merged/ota.json "$file" > merged/temp.json
+              
               mv merged/temp.json merged/ota.json
+              echo "Current merged result:"
+              cat merged/ota.json
             fi
           done
+          
+          # 格式化最终的 JSON
+          jq . merged/ota.json > merged/temp.json && mv merged/temp.json merged/ota.json
 
       - name: Deploy OTA to Gitea
         run: |
