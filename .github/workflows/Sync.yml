@@ -74,7 +74,7 @@ jobs:
 
       - name: Push to Gitea
         run: |
-          git clone https://zhao:${{ secrets.password }}@git.kejizero.online/zhao/OTA.git
+          git clone https://zhao:${{ secrets.PASSWORD }}@git.kejizero.online/zhao/OTA.git
           cd OTA
           cp ../ota.json .
           git config user.name "Gitea Actions"
