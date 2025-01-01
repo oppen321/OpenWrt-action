@@ -1,0 +1,84 @@
+name: Update OTA Info
+on:
+  workflow_dispatch:  # 手动触发
+  workflow_run:
+    workflows: ["Build releases"]  # 监听 Build releases 工作流
+    types:
+      - completed
+
+jobs:
+  update-ota:
+    # 只在 Build releases 成功时运行
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name != 'workflow_run' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl jq
+
+      - name: Get latest release info
+        run: |
+          # 获取最新的 release 标签
+          LATEST_TAG=$(curl -s https://api.github.com/repos/oppen321/OpenWrt-Action/releases/latest | jq -r .tag_name)
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          
+          # 去掉版本号中的 v 前缀
+          VERSION=${LATEST_TAG#v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Generate OTA Info
+        run: |
+          CURRENT_DATE=$(date +%s)
+          
+          # 创建 OTA JSON
+          cat > ota.json << EOF
+          {
+            "netgear,r8500": [
+              {
+                "build_date": "$CURRENT_DATE",
+                "sha256sum": "$(curl -sL https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-bcm53xx-generic-netgear_r8500-squashfs.chk | sha256sum | cut -d' ' -f1)",
+                "url": "https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-bcm53xx-generic-netgear_r8500-squashfs.chk"
+              }
+            ],
+            "friendlyarm,nanopi-r4s": [
+              {
+                "build_date": "$CURRENT_DATE",
+                "sha256sum": "$(curl -sL https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-rockchip-armv8-friendlyarm_nanopi-r4s-squashfs-sysupgrade.img.gz | sha256sum | cut -d' ' -f1)",
+                "url": "https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-rockchip-armv8-friendlyarm_nanopi-r4s-squashfs-sysupgrade.img.gz"
+              }
+            ],
+            "friendlyarm,nanopi-r5s": [
+              {
+                "build_date": "$CURRENT_DATE",
+                "sha256sum": "$(curl -sL https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-rockchip-armv8-friendlyarm_nanopi-r5s-squashfs-sysupgrade.img.gz | sha256sum | cut -d' ' -f1)",
+                "url": "https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-rockchip-armv8-friendlyarm_nanopi-r5s-squashfs-sysupgrade.img.gz"
+              }
+            ],
+            "x86_64": [
+              {
+                "build_date": "$CURRENT_DATE",
+                "sha256sum": "$(curl -sL https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-x86-64-generic-squashfs-combined-efi.img.gz | sha256sum | cut -d' ' -f1)",
+                "url": "https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-x86-64-generic-squashfs-combined-efi.img.gz"
+              }
+            ],
+            "armsr,armv8": [
+              {
+                "build_date": "$CURRENT_DATE",
+                "sha256sum": "$(curl -sL https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-armsr-armv8-generic-squashfs-combined-efi.img.gz | sha256sum | cut -d' ' -f1)",
+                "url": "https://ghgo.xyz/https://github.com/oppen321/OpenWrt-Action/releases/download/${{ env.LATEST_TAG }}/openwrt-${{ env.VERSION }}-armsr-armv8-generic-squashfs-combined-efi.img.gz"
+              }
+            ]
+          }
+          EOF
+
+      - name: Push to Gitea
+        run: |
+          git clone https://zhao:${{ secrets.password }}@git.kejizero.online/zhao/OTA.git
+          cd OTA
+          cp ../ota.json .
+          git config user.name "Gitea Actions"
+          git config user.email "action@gitea.com"
+          git add ota.json
+          git commit -m "Update OTA information"
+          git push origin main
