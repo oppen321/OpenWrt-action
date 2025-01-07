@@ -13,8 +13,8 @@ curl -L -o files/root/version.txt https://git.kejizero.online/zhao/files/raw/bra
 chmod +x files/root/version.txt
 
 # 网络设置
-mkdir -p files/etc/uci-defaults
-curl -L -o files/etc/uci-defaults/99-custom.sh https://git.kejizero.online/zhao/files/raw/branch/main/etc/uci-defaults/99-custom.sh
+# mkdir -p files/etc/uci-defaults
+# curl -L -o files/etc/uci-defaults/99-custom.sh https://git.kejizero.online/zhao/files/raw/branch/main/etc/uci-defaults/99-custom.sh
 
 # 更换背景
 curl -L -o package/new/luci-theme-argon/luci-theme-argon/htdocs/luci-static/argon/img/bg.webp https://git.kejizero.online/zhao/files/raw/branch/main/%20background/bg.webp
