@@ -20,6 +20,16 @@ on:
         required: true
         default: '10.0.0.1'
         type: string
+      pppoe_username:
+        description: 'PPPoE Username'
+        required: false
+        default: ''
+        type: string
+      pppoe_password:
+        description: 'PPPoE Password'
+        required: false
+        default: ''
+        type: string
       build_options:
         description: 'Build options (separate multiple options with spaces)'
         required: false
